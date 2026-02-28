@@ -1,18 +1,8 @@
 ---
 deployment:
   tasks:
-    # 1. Safety check: Ensure the build directory exists
-    - if [ ! -d "frontend/dist" ]; then echo "Error: frontend/dist directory missing. Deployment failed." && exit 1; fi
-
-    # 2. Ensure the destination directory exists
-    - /bin/mkdir -p /home/qqgbtymm/public_html
-    
-    # 2. Remove old frontend files (assets, index.html, vite.svg)
-    # We do this manually to avoid using rsync which might be disabled in jailed shells.
-    # This preserves crm, sameday, api, storage, data, uploads, .htaccess etc.
-    - /bin/rm -rf /home/qqgbtymm/public_html/assets
-    - /bin/rm -f /home/qqgbtymm/public_html/index.html
-    - /bin/rm -f /home/qqgbtymm/public_html/vite.svg
-    
-    # 3. Copy the new frontend build
-    - /bin/cp -R frontend/dist/* /home/qqgbtymm/public_html/
+    - export DEPLOYPATH=/home/qqgbtymm/public_html
+    - /bin/rm -rf $DEPLOYPATH/assets
+    - /bin/rm -f $DEPLOYPATH/index.html
+    - /bin/rm -f $DEPLOYPATH/vite.svg
+    - /bin/cp -R frontend/dist/* $DEPLOYPATH/
