@@ -72,7 +72,7 @@ try {
 
     // 3. Clean up old artifacts (Safety first!)
     // We only remove known frontend files/folders
-    $toRemove = ['index.html', 'assets', 'vite.svg', 'deploy_diagnostic.php'];
+    $toRemove = ['index.html', 'assets', 'vite.svg'];
     foreach ($toRemove as $item) {
         $path = $webRoot . '/' . $item;
         if (file_exists($path)) {

@@ -9,6 +9,12 @@ class WebsiteController extends Controller {
     public function index() {
         $db = Database::getInstance();
         $content = $db->query("SELECT section, content_json FROM website_content")->fetchAll(\PDO::FETCH_KEY_PAIR);
+        
+        // Auto-generate if missing to prevent frontend 404s
+        if (!file_exists("/home/qqgbtymm/public_html/data/site_content.json")) {
+            $this->generatePublicJson($db);
+        }
+
         $this->render('website/manager', [
             'content' => $content,
             'deployToken' => env('DEPLOY_TOKEN', 'daser_deploy_2026')
