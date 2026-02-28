@@ -1,8 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/qqgbtymm/public_html
-    - /bin/rm -rf $DEPLOYPATH/assets
-    - /bin/rm -f $DEPLOYPATH/index.html
-    - /bin/rm -f $DEPLOYPATH/vite.svg
-    - /bin/cp -R frontend/dist/* $DEPLOYPATH/
+    - /bin/rm -rf /home/qqgbtymm/public_html/assets
+    - /bin/rm -f /home/qqgbtymm/public_html/index.html
+    - /bin/rm -f /home/qqgbtymm/public_html/vite.svg
+    - /bin/cp -R frontend/dist/* /home/qqgbtymm/public_html/
