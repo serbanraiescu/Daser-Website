@@ -6,6 +6,7 @@
 
 // Load .env to get the token
 $envFile = __DIR__ . '/../../.env';
+$deployToken = '';
 if (file_exists($envFile)) {
     $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     foreach ($lines as $line) {
