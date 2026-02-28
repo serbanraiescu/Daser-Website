@@ -80,7 +80,7 @@ document.getElementById('deployBtn').addEventListener('click', async function() 
     btn.innerHTML = '<span class="animate-spin inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> Deploying...';
 
     try {
-        const response = await fetch('deploy.php?token=<?php echo $deployToken; ?>');
+        const response = await fetch('deploy.php?token=<?php echo $deployToken; ?>&pull=1');
         const result = await response.json();
         
         if (result.success) {

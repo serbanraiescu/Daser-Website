@@ -43,6 +43,17 @@ $results = [
 ];
 
 try {
+    // 0. Optional Git Pull (Automation)
+    if (isset($_GET['pull']) || isset($isWebhook)) {
+        $originalDir = getcwd();
+        if (is_dir($repoRoot)) {
+            chdir($repoRoot);
+            $pullOutput = shell_exec('git pull origin main 2>&1');
+            $results['pull_output'] = $pullOutput;
+            chdir($originalDir);
+        }
+    }
+
     // 1. Check if source exists
     if (!is_dir($source)) {
         throw new Exception("Source directory not found: $source");
