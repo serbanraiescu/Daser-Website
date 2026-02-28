@@ -63,12 +63,19 @@ class MigrationRunner {
                 $migration->up($this->db);
             }
 
+            // DDL statements (CREATE, ALTER) in up() cause implicit COMMIT in MySQL
+            // If up() did DDL, $this->db->inTransaction() will be false here.
+            
             $stmt = $this->db->prepare("INSERT INTO migrations (migration_name) VALUES (?)");
             $stmt->execute([$filename]);
 
-            $this->db->commit();
+            if ($this->db->inTransaction()) {
+                $this->db->commit();
+            }
         } catch (Exception $e) {
-            $this->db->rollBack();
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
             throw new Exception("Migration failed: $filename - " . $e->getMessage());
         }
     }
@@ -108,7 +115,9 @@ class MigrationRunner {
 
             $this->db->commit();
         } catch (Exception $e) {
-            $this->db->rollBack();
+            if ($this->db->inTransaction()) {
+                $this->db->rollBack();
+            }
             // Silent fail for auto-provision or log it
         }
     }
