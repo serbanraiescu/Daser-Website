@@ -55,8 +55,8 @@ class WebsiteController extends Controller {
             $finalData[$section] = json_decode($json, true);
         }
 
-        // Correct path to reach /home/qqgbtymm/public_html from /home/qqgbtymm/daser_design/crm/app/Controllers/
-        $filePath = __DIR__ . "/../../../../public_html/data/site_content.json";
+        // Use absolute path to ensure we always hit the correct directory
+        $filePath = "/home/qqgbtymm/public_html/data/site_content.json";
         $dirPath = dirname($filePath);
 
         if (!is_dir($dirPath)) {
