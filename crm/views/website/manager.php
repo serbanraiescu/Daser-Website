@@ -131,9 +131,61 @@
         </div>
     <?php endif; ?>
 
+    <?php if ($activeTab === 'services'): ?>
+        <?php $servicesData = isset($content['services']) ? json_decode($content['services']['content_json'], true) : ['items' => []]; ?>
+        <div class="card">
+            <h3 class="text-lg font-bold mb-4 border-b pb-2">Gestionare Servicii</h3>
+            <div id="services-container" class="space-y-4">
+                <?php foreach ($servicesData['items'] as $index => $item): ?>
+                    <div class="p-4 border rounded bg-gray-50 relative group">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Titlu Serviciu</label>
+                                <input type="text" name="website[services][items][<?php echo $index; ?>][title]" value="<?php echo $item['title']; ?>" class="w-full border rounded px-3 py-2 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Slug (URL)</label>
+                                <input type="text" name="website[services][items][<?php echo $index; ?>][slug]" value="<?php echo $item['slug']; ?>" class="w-full border rounded px-3 py-2 text-sm">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-1">Descriere Scurtă</label>
+                                <textarea name="website[services][items][<?php echo $index; ?>][description]" class="w-full border rounded px-3 py-2 text-sm" rows="2"><?php echo $item['description']; ?></textarea>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <p class="mt-4 text-xs text-gray-500 italic">* Momentan editarea listelor complexe se face prin seeding sau manual în DB. Interfața de adăugare dinamică va fi disponibilă în update-ul următor.</p>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($activeTab === 'legal'): ?>
+        <?php $legal = isset($content['legal']) ? json_decode($content['legal']['content_json'], true) : []; ?>
+        <div class="space-y-6">
+            <div class="card">
+                <h3 class="text-lg font-bold mb-4 border-b pb-2">Termeni și Condiții</h3>
+                <textarea name="website[legal][terms][content]" class="w-full border rounded px-3 py-2 text-sm" rows="10"><?php echo $legal['terms']['content'] ?? ''; ?></textarea>
+            </div>
+            <div class="card">
+                <h3 class="text-lg font-bold mb-4 border-b pb-2">Politică de Confidențialitate (GDPR)</h3>
+                <textarea name="website[legal][privacy][content]" class="w-full border rounded px-3 py-2 text-sm" rows="10"><?php echo $legal['privacy']['content'] ?? ''; ?></textarea>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($activeTab === 'general'): ?>
+        <div class="mt-8 p-6 bg-red-50 border border-red-100 rounded-lg">
+            <h4 class="text-red-800 font-bold mb-2">Zonă Periculoasă</h4>
+            <p class="text-red-600 text-sm mb-4">Dacă vrei să resetezi tot conținutul site-ului la valorile profesionale implicite (Romanian Copywriting), folosește butonul de mai jos. Atenție: Această acțiune va suprascrie modificările tale actuale!</p>
+            <a href="/website-manager/seed" onclick="return confirm('Sigur vrei să resetezi tot conținutul la valorile implicite?')" class="inline-block bg-red-600 text-white px-4 py-2 rounded font-bold hover:bg-red-700 transition text-sm">
+                RESTORE PROFESSIONAL DEFAULTS
+            </a>
+        </div>
+    <?php endif; ?>
+
     <div class="fixed bottom-0 left-0 right-0 bg-white border-t p-4 z-50 flex justify-center shadow-lg">
-        <button type="submit" class="bg-blue-600 text-white px-12 py-3 rounded-lg font-bold shadow-lg hover:bg-blue-700 transition">
-            SALVEAZĂ & REGENEREAZĂ SITE-UL
+        <button type="submit" class="bg-blue-600 text-white px-12 py-3 rounded-lg font-bold shadow-lg hover:bg-blue-700 transition uppercase tracking-widest">
+            SALVEAZĂ CONȚINUT & UPDATE SITE
         </button>
     </div>
 </form>

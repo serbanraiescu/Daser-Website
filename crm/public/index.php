@@ -43,6 +43,7 @@ $router->add('POST', '/projects/create', 'ProjectController', 'create', [\App\Mi
 // Website Manager (Protected)
 $router->add('GET', '/website-manager', 'WebsiteController', 'index', [\App\Middleware\AuthMiddleware::class]);
 $router->add('POST', '/website-manager/save', 'WebsiteController', 'save', [\App\Middleware\AuthMiddleware::class]);
+$router->add('GET', '/website-manager/seed', 'WebsiteController', 'seed', [\App\Middleware\AuthMiddleware::class]);
 
 // Settings (Protected)
 $router->add('GET', '/settings', 'SettingsController', 'index', [\App\Middleware\AuthMiddleware::class]);

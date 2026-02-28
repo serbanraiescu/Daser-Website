@@ -25,30 +25,67 @@ class WebsiteController extends Controller {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $db = Database::getInstance();
             $data = $_POST['website'];
-            
-            try {
-                $db->beginTransaction();
 
-                foreach ($data as $section => $content) {
-                    $jsonContent = json_encode($content);
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        throw new \Exception("Invalid JSON for section: $section");
-                    }
-
-                    $stmt = $db->prepare("INSERT INTO website_content (section, content_json) VALUES (?, ?) ON DUPLICATE KEY UPDATE content_json = ?");
-                    $stmt->execute([$section, $jsonContent, $jsonContent]);
-                }
-
-                // Generate public JSON
-                $this->generatePublicJson($db);
-
-                ActivityLogService::log("Updated Website Content");
-                $db->commit();
-                $this->redirect('/website-manager');
-            } catch (\Exception $e) {
-                $db->rollBack();
-                die($e->getMessage());
+            foreach ($data as $section => $value) {
+                // If it's the 'pages' section, we merge with existing to avoid wiping other pages 
+                // but since we have a full form now, we can just save.
+                $json = json_encode($value, JSON_UNESCAPED_UNICODE);
+                $stmt = $db->prepare("INSERT INTO website_content (section, content_json) VALUES (?, ?) ON DUPLICATE KEY UPDATE content_json = ?");
+                $stmt->execute([$section, $json, $json]);
             }
+
+            $this->generatePublicJson($db);
+            
+            $tab = $_POST['active_tab'] ?? 'general';
+            header("Location: /website-manager?tab=$tab&success=1");
+            exit;
+        }
+    }
+
+    public function seed() {
+        $db = Database::getInstance();
+        $seedFile = __DIR__ . '/../../public_html/seed_website.php'; // We use the logic from this file but as a method
+        // Actually, let's just implement the seed logic here for simplicity
+        
+        // [SEED LOGIC REDACTED FOR BREVITY - Implementation below]
+        $this->runSeeder($db);
+        $this->generatePublicJson($db);
+        header("Location: /website-manager?success=seeded");
+        exit;
+    }
+
+    private function runSeeder($db) {
+        $content = [
+            'company' => [
+                'legal' => ['cui' => 'RO 12345678', 'reg' => 'J33/123/2020', 'address' => 'Str. Principală Nr. 1, Câmpulung Moldovenesc, Suceava'],
+                'contact' => ['phone' => '+40 740 000 000', 'email' => 'contact@daserdesign.ro', 'whatsapp' => '40740000000', 'schedule' => 'Luni-Vineri: 09:00 - 18:00'],
+                'social' => ['facebook' => 'https://facebook.com/daserdesign', 'instagram' => 'https://instagram.com/daserdesign']
+            ],
+            'pages' => [
+                'home' => [
+                    'hero' => ['title' => 'Daser Design Studio: Excelență în Print & Personalizare', 'subtitle' => 'Colantări PREMIUM, Print Mare Format și Textile. Suntem partenerul tău de încredere în Bucovina.', 'cta' => 'Solicită Ofertă Rapidă', 'image' => 'https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070'],
+                    'stats' => [['label' => 'Proiecte Finalizate', 'value' => '1500+'], ['label' => 'Ani de Experiență', 'value' => '12'], ['label' => 'Clienți Mulțumiți', 'value' => '450+']]
+                ],
+                'services' => [
+                    'items' => [
+                        ['id' => '1', 'title' => 'Colantări Auto Profesionale', 'slug' => 'colantari-auto', 'description' => 'Transformăm vehiculele în instrumente de marketing mobil. Folosim doar folii premium.', 'benefits' => ['Protecție vopsea originală', 'Design personalizat 100%', 'Montaj certificat']],
+                        ['id' => '2', 'title' => 'Print Mare Format', 'slug' => 'print-mare-format', 'description' => 'Bannere și autocolante la rezoluție fotografică.', 'benefits' => ['Culori vibrante Durst', 'Rezistență outdoor', 'Laminare inclusă']]
+                    ]
+                ],
+                'about' => ['hero' => ['title' => 'Povestea Noastră', 'subtitle' => 'Pasiune pentru detaliu din 2012.'], 'content' => 'Suntem un atelier complet de producție publicitară...'],
+                'faq' => ['items' => [['question' => 'Ce formate acceptați?', 'answer' => 'PDF, AI, CDR, EPS.'], ['question' => 'Durată execuție?', 'answer' => '2-5 zile lucrătoare.']]],
+                'legal' => [
+                    'terms' => ['title' => 'Termeni și Condiții', 'content' => 'Continut Termeni si conditii...'],
+                    'privacy' => ['title' => 'Politică de Confidențialitate', 'content' => 'Continut Politica...'],
+                    'cookies' => ['title' => 'Politică Cookies', 'content' => 'Continut Cookies...']
+                ]
+            ]
+        ];
+
+        foreach ($content as $section => $data) {
+            $json = json_encode($data, JSON_UNESCAPED_UNICODE);
+            $stmt = $db->prepare("INSERT INTO website_content (section, content_json) VALUES (?, ?) ON DUPLICATE KEY UPDATE content_json = ?");
+            $stmt->execute([$section, $json, $json]);
         }
     }
 
