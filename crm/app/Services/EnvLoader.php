@@ -61,11 +61,13 @@ namespace App\Services {
 namespace {
     if (!function_exists('env')) {
         function env($key, $default = null) {
-            $value = getenv($key);
+            $value = $_ENV[$key] ?? $_SERVER[$key] ?? getenv($key);
 
-            if ($value === false) {
+            if ($value === false || $value === null) {
                 return $default;
             }
+
+            $value = trim($value, '"\' ');
 
             switch (strtolower($value)) {
                 case 'true':

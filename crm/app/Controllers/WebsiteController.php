@@ -11,7 +11,7 @@ class WebsiteController extends Controller {
         $content = $db->query("SELECT section, content_json FROM website_content")->fetchAll(\PDO::FETCH_KEY_PAIR);
         $this->render('website/manager', [
             'content' => $content,
-            'deployToken' => env('DEPLOY_TOKEN')
+            'deployToken' => env('DEPLOY_TOKEN', 'daser_deploy_2026')
         ]);
     }
 

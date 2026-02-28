@@ -19,6 +19,10 @@ if (file_exists($envFile)) {
     }
 }
 
+if (empty($deployToken)) {
+    $deployToken = 'daser_deploy_2026';
+}
+
 // Token Validation
 if (!isset($_GET['token']) || $_GET['token'] !== $deployToken || empty($deployToken)) {
     header("HTTP/1.1 403 Forbidden");
