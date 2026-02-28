@@ -26,7 +26,20 @@ class Database {
         try {
             $this->connection = new PDO($dsn, $user, $pass, $options);
         } catch (PDOException $e) {
-            throw new PDOException($e->getMessage(), (int)$e->getCode());
+            $errorMessage = "Database connection failed: " . $e->getMessage();
+            
+            // Log for everyone
+            $logPath = __DIR__ . '/../../storage/logs/app.log';
+            if (!is_dir(dirname($logPath))) mkdir(dirname($logPath), 0755, true);
+            file_put_contents($logPath, "[" . date('Y-m-d H:i:s') . "] " . $errorMessage . PHP_EOL, FILE_APPEND);
+
+            if (env('APP_ENV') === 'development') {
+                throw new PDOException($errorMessage, (int)$e->getCode());
+            } else {
+                header("HTTP/1.1 500 Internal Server Error");
+                echo "A data connection error occurred. Please try again later.";
+                exit;
+            }
         }
     }
 

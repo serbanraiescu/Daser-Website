@@ -15,7 +15,15 @@ class MigrationRunner {
     }
 
     public function run() {
-        $this->ensureMigrationsTable();
+        try {
+            $this->ensureMigrationsTable();
+        } catch (Exception $e) {
+            // Log and skip if DB is not available yet
+            $logPath = __DIR__ . '/../../storage/logs/app.log';
+            $timestamp = date('Y-m-d H:i:s');
+            file_put_contents($logPath, "[$timestamp] MigrationRunner skipped: " . $e->getMessage() . PHP_EOL, FILE_APPEND);
+            return;
+        }
         
         $executed = $this->getExecutedMigrations();
         $files = glob($this->migrationsPath . '*.php');
