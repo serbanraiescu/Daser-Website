@@ -61,14 +61,84 @@ class WebsiteController extends Controller {
             $finalData[$section] = json_decode($json, true);
         }
 
-        // Use absolute path to ensure we always hit the correct directory
-        $filePath = "/home/qqgbtymm/public_html/data/site_content.json";
-        $dirPath = dirname($filePath);
+        // --- AI SEO & SCHEMA GENERATION ---
+        $this->enrichWithSEO($finalData);
 
-        if (!is_dir($dirPath)) {
-            mkdir($dirPath, 0755, true);
+        // Save JSON
+        $filePath = "/home/qqgbtymm/public_html/data/site_content.json";
+        if (!is_dir(dirname($filePath))) mkdir(dirname($filePath), 0755, true);
+        file_put_contents($filePath, json_encode($finalData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE), LOCK_EX);
+
+        // Generate Sitemap & Robots
+        $this->generateSitemap($finalData);
+        $this->generateRobots();
+    }
+
+    private function enrichWithSEO(&$data) {
+        $brand = "Daser Design Studio";
+        $location = "Câmpulung Moldovenesc, Suceava";
+
+        if (!isset($data['pages'])) return;
+
+        foreach ($data['pages'] as $pageKey => &$page) {
+            if (!isset($page['seo'])) $page['seo'] = [];
+            
+            // Auto Title
+            if (empty($page['seo']['title'])) {
+                $rawTitle = $page['hero']['title'] ?? ucfirst($pageKey);
+                $page['seo']['title'] = mb_strimwidth("$rawTitle | $brand", 0, 60, "...");
+            }
+
+            // Auto Description
+            if (empty($page['seo']['description'])) {
+                $rawDesc = $page['hero']['subtitle'] ?? "Servicii profesionale de print și publicitate în $location. Calitate garantată.";
+                $page['seo']['description'] = mb_strimwidth($rawDesc, 0, 160, "...");
+            }
+
+            // Shared OG/Canonical
+            $page['seo']['canonical'] = "https://daserdesign.ro/" . ($pageKey === 'home' ? '' : $pageKey);
+            $page['seo']['og_title'] = $page['seo']['title'];
+            $page['seo']['og_description'] = $page['seo']['description'];
+
+            // JSON-LD LocalBusiness (Common for all pages)
+            $page['seo']['schema_jsonld'] = [
+                "@context" => "https://schema.org",
+                "@type" => "LocalBusiness",
+                "name" => $brand,
+                "image" => "https://daserdesign.ro/assets/logo-og.png",
+                "address" => [
+                    "@type" => "PostalAddress",
+                    "addressLocality" => "Câmpulung Moldovenesc",
+                    "addressRegion" => "Suceava",
+                    "addressCountry" => "RO"
+                ],
+                "geo" => [
+                    "@type" => "GeoCoordinates",
+                    "latitude" => 47.5303,
+                    "longitude" => 25.5511
+                ],
+                "url" => "https://daserdesign.ro",
+                "telephone" => $data['company']['contact']['phone'] ?? ""
+            ];
+        }
+    }
+
+    private function generateSitemap($data) {
+        $xml = '<?xml version="1.0" encoding="UTF-8"?>' . PHP_EOL;
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . PHP_EOL;
+        
+        $pages = $data['pages'] ?? [];
+        foreach ($pages as $key => $page) {
+            $url = "https://daserdesign.ro/" . ($key === 'home' ? '' : $key);
+            $xml .= "  <url><loc>$url</loc><priority>" . ($key === 'home' ? '1.0' : '0.8') . "</priority></url>" . PHP_EOL;
         }
 
-        file_put_contents($filePath, json_encode($finalData, JSON_PRETTY_PRINT), LOCK_EX);
+        $xml .= '</urlset>';
+        file_put_contents("/home/qqgbtymm/public_html/sitemap.xml", $xml, LOCK_EX);
+    }
+
+    private function generateRobots() {
+        $txt = "User-agent: *\nAllow: /\n\nSitemap: https://daserdesign.ro/sitemap.xml";
+        file_put_contents("/home/qqgbtymm/public_html/robots.txt", $txt, LOCK_EX);
     }
 }
