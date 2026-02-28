@@ -59,7 +59,7 @@ $services = isset($content['services']) ? json_decode($content['services']['cont
         </div>
         <button type="button" id="deployBtn" class="bg-magenta text-white px-6 py-2 rounded font-bold shadow hover:opacity-90 transition flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="box-arrow-in-up" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             DEPLOY FULL LANDING
         </button>
@@ -80,7 +80,7 @@ document.getElementById('deployBtn').addEventListener('click', async function() 
     btn.innerHTML = '<span class="animate-spin inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> Deploying...';
 
     try {
-        const response = await fetch('/deploy.php?token=<?php echo $deployToken; ?>');
+        const response = await fetch('deploy.php?token=<?php echo $deployToken; ?>');
         const result = await response.json();
         
         if (result.success) {
