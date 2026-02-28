@@ -1,11 +1,19 @@
 <?php
 
-require_once __DIR__ . '/../app/Services/Autoloader.php';
-
 use App\Services\Autoloader;
+use App\Services\EnvLoader;
 use App\Services\Router;
+use App\Services\MigrationRunner;
 
 Autoloader::register();
+
+// Load Environment
+$env = new EnvLoader(__DIR__ . '/../../.env');
+$env->load();
+
+// Auto-run Migrations
+$migrations = new MigrationRunner();
+$migrations->run();
 
 $router = new Router();
 

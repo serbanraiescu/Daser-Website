@@ -1,0 +1,7 @@
+.env
+/crm/storage/*
+/storage/leads_files/*
+/public_html/uploads/*
+.DS_Store
+vendor/
+node_modules/

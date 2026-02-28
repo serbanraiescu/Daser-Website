@@ -10,10 +10,10 @@ class Database {
     private $connection;
 
     private function __construct() {
-        $host = 'localhost';
-        $db   = 'daser_crm'; // Adjust if different
-        $user = 'root';      // Adjust if different
-        $pass = '';          // Adjust if different
+        $host = env('DB_HOST', 'localhost');
+        $db   = env('DB_NAME', 'daser_crm');
+        $user = env('DB_USER', 'root');
+        $pass = env('DB_PASS', '');
         $charset = 'utf8mb4';
 
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
