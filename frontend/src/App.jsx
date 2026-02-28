@@ -6,8 +6,8 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch from the root /data directory where WebsiteManager saves it
-    fetch('/data/site_content.json')
+    // Fetch from the data directory relative to the index.html
+    fetch('data/site_content.json')
       .then(res => {
         if (!res.ok) throw new Error('Failed to load content');
         return res.json();
