@@ -9,7 +9,10 @@ class WebsiteController extends Controller {
     public function index() {
         $db = Database::getInstance();
         $content = $db->query("SELECT * FROM website_content")->fetchAll(\PDO::FETCH_UNIQUE);
-        $this->render('website/manager', ['content' => $content]);
+        $this->render('website/manager', [
+            'content' => $content,
+            'deployToken' => env('DEPLOY_TOKEN')
+        ]);
     }
 
     public function save() {

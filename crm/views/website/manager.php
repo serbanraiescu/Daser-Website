@@ -52,7 +52,51 @@ $services = isset($content['services']) ? json_decode($content['services']['cont
         </div>
     </div>
 
-    <div class="flex justify-end">
+    <div class="flex justify-between items-center bg-white p-4 rounded-lg shadow-sm border mt-8">
+        <div>
+            <h4 class="font-bold text-gray-700">Production Deployment</h4>
+            <p class="text-xs text-gray-500">Manually sync the latest build from the repository to the live site.</p>
+        </div>
+        <button type="button" id="deployBtn" class="bg-magenta text-white px-6 py-2 rounded font-bold shadow hover:opacity-90 transition flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="box-arrow-in-up" />
+            </svg>
+            DEPLOY FULL LANDING
+        </button>
+    </div>
+
+    <div class="flex justify-end mt-4">
         <button type="submit" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:bg-blue-700 transition">SAVE & DEPLOY JSON</button>
     </div>
 </form>
+
+<script>
+document.getElementById('deployBtn').addEventListener('click', async function() {
+    if (!confirm('Are you sure you want to deploy the latest build to the live site?')) return;
+    
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="animate-spin inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full mr-2"></span> Deploying...';
+
+    try {
+        const response = await fetch('/deploy.php?token=<?php echo $deployToken; ?>');
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('🎉 ' + result.message);
+        } else {
+            alert('❌ Deployment failed: ' + result.message);
+        }
+    } catch (error) {
+        alert('❌ Error contacting deployment script: ' + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+});
+</script>
+
+<style>
+.bg-magenta { background-color: #d01d83; }
+</style>
