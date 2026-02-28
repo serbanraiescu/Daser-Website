@@ -1,11 +1,13 @@
 ---
 deployment:
   tasks:
-    # 1. Ensure the destination directory exists
-    - export DEPLOYPATH=/home/qqgbtymm/public_html
-    - /bin/mkdir -p $DEPLOYPATH
+    # 1. Safety check: Ensure the build directory exists
+    - if [ ! -d "frontend/dist" ]; then echo "Error: frontend/dist directory missing. Deployment failed." && exit 1; fi
+
+    # 2. Ensure the destination directory exists
+    - /bin/mkdir -p /home/qqgbtymm/public_html
     
-    # 2. Sync files from frontend/dist to public_html
+    # 3. Sync files from frontend/dist to public_html
     # We use rsync to safely copy and optionally remove old files from the destination
     # that no longer exist in the source, BUT we exclude critical directories that we want to keep.
     
@@ -17,4 +19,4 @@ deployment:
     # Let's use a highly targeted rsync that deletes old frontend files
     # while explicitly excluding the folders/files that must be preserved.
     
-    - /usr/bin/rsync -avz --delete --exclude 'crm' --exclude 'storage' --exclude 'api' --exclude 'sameday' --exclude '.htaccess' --exclude 'cgi-bin' --exclude 'data' --exclude 'uploads' frontend/dist/ $DEPLOYPATH/
+    - /usr/bin/rsync -avz --delete --exclude 'crm' --exclude 'storage' --exclude 'api' --exclude 'sameday' --exclude '.htaccess' --exclude 'cgi-bin' --exclude 'data' --exclude 'uploads' frontend/dist/ /home/qqgbtymm/public_html/
