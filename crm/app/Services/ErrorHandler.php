@@ -36,7 +36,7 @@ class ErrorHandler {
     }
 
     private static function renderError($e) {
-        $env = defined('APP_ENV') ? APP_ENV : (function_exists('env') ? env('APP_ENV', 'production') : 'production');
+        $env = 'development'; // Force development for active debugging
         
         if (php_sapi_name() === 'cli') {
             echo "ERROR: " . $e->getMessage() . PHP_EOL;
