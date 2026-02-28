@@ -1,5 +1,6 @@
 ---
 deployment:
   tasks:
+    - test -f frontend/dist/index.html || (echo "Missing frontend/dist/index.html in repo" && exit 1)
     - /usr/bin/touch /home/qqgbtymm/public_html/cpanel_deploy_tested.txt
     - /bin/cp -R /home/qqgbtymm/daser_design/frontend/dist/* /home/qqgbtymm/public_html/
