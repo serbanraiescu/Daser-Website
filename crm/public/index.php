@@ -44,5 +44,9 @@ $router->add('POST', '/projects/create', 'ProjectController', 'create', [\App\Mi
 $router->add('GET', '/website-manager', 'WebsiteController', 'index', [\App\Middleware\AuthMiddleware::class]);
 $router->add('POST', '/website-manager/save', 'WebsiteController', 'save', [\App\Middleware\AuthMiddleware::class]);
 
+// Settings (Protected)
+$router->add('GET', '/settings', 'SettingsController', 'index', [\App\Middleware\AuthMiddleware::class]);
+$router->add('POST', '/settings/save', 'SettingsController', 'save', [\App\Middleware\AuthMiddleware::class]);
+
 // Dispatch
 $router->dispatch($_SERVER['REQUEST_METHOD'], $_SERVER['REQUEST_URI']);

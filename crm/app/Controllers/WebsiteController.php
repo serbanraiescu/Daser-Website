@@ -8,7 +8,7 @@ use App\Services\ActivityLogService;
 class WebsiteController extends Controller {
     public function index() {
         $db = Database::getInstance();
-        $content = $db->query("SELECT * FROM website_content")->fetchAll(\PDO::FETCH_UNIQUE);
+        $content = $db->query("SELECT section, content_json FROM website_content")->fetchAll(\PDO::FETCH_KEY_PAIR);
         $this->render('website/manager', [
             'content' => $content,
             'deployToken' => env('DEPLOY_TOKEN')
