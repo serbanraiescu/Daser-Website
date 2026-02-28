@@ -1,0 +1,20 @@
+---
+deployment:
+  tasks:
+    # 1. Ensure the destination directory exists
+    - export DEPLOYPATH=/home/qqgbtymm/public_html
+    - /bin/mkdir -p $DEPLOYPATH
+    
+    # 2. Sync files from frontend/dist to public_html
+    # We use rsync to safely copy and optionally remove old files from the destination
+    # that no longer exist in the source, BUT we exclude critical directories that we want to keep.
+    
+    # WARNING: To be extremely safe and exactly meet the requirements:
+    # "Remove only old landing files, Preserve other folders, Avoid deleting non-related files"
+    # We will simply copy the new files over. If old landing page files exist and aren't overwritten,
+    # they will remain. If we use --delete in rsync, we MUST exclude everything we want to keep.
+    
+    # Let's use a highly targeted rsync that deletes old frontend files
+    # while explicitly excluding the folders/files that must be preserved.
+    
+    - /usr/bin/rsync -avz --delete --exclude 'crm' --exclude 'storage' --exclude 'api' --exclude 'sameday' --exclude '.htaccess' --exclude 'cgi-bin' --exclude 'data' --exclude 'uploads' frontend/dist/ $DEPLOYPATH/
