@@ -101,46 +101,237 @@ const Footer = ({ data }) => (
 // --- PAGES ---
 const HomePage = ({ data }) => {
   const home = data?.pages?.home;
+  const services = data?.pages?.services?.items || [];
   if (!home) return null;
 
   return (
     <div className="animate-in fade-in duration-700">
       {/* Hero */}
-      <section className="relative bg-slate-50 pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-accent/5 blur-3xl"></div>
+      <section className="relative bg-white pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] rounded-full bg-accent/5 blur-3xl"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-4xl mx-auto">
-            <span className="inline-block py-1.5 px-4 rounded-full bg-accent/10 text-accent font-bold text-xs mb-6 uppercase tracking-widest leading-none">Daser Design Studio</span>
-            <h1 className="text-5xl md:text-8xl font-black text-slate-900 tracking-tight leading-[1.1] mb-8 uppercase italic">
+            <span className="inline-block py-2 px-6 rounded-full bg-accent/10 text-accent font-black text-xs mb-8 uppercase tracking-[0.3em] leading-none">Bucovina • Professional Production</span>
+            <h1 className="text-6xl md:text-8xl font-black text-slate-900 tracking-tighter leading-[0.95] mb-10 uppercase italic">
               {home.hero?.title?.split('Studio').map((p, i) => (
-                <span key={i}>{p}{i === 0 && <span className="text-accent underline decoration-8 underline-offset-8">Studio</span>}</span>
+                <span key={i} className="block">{p}{i === 0 && <span className="text-accent underline decoration-[12px] underline-offset-[16px]">Studio</span>}</span>
               ))}
             </h1>
-            <p className="mt-6 max-w-2xl mx-auto text-xl text-slate-600 leading-relaxed mb-10 font-medium">
+            <p className="mt-8 max-w-2xl mx-auto text-xl text-slate-500 leading-relaxed mb-12 font-medium">
               {home.hero?.subtitle}
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Link to="/contact" className="inline-flex justify-center items-center px-10 py-5 border border-transparent text-lg font-black rounded-full shadow-2xl shadow-accent/40 text-white bg-accent hover:bg-accent-dark transition-all transform hover:-translate-y-1 uppercase italic tracking-tighter italic">
+            <div className="flex flex-col sm:flex-row justify-center gap-6">
+              <Link to="/contact" className="inline-flex justify-center items-center px-12 py-6 text-lg font-black rounded-full shadow-2xl shadow-accent/40 text-white bg-accent hover:bg-slate-900 transition-all transform hover:-translate-y-1 uppercase italic tracking-tighter">
                 {home.hero?.cta}
+              </Link>
+              <Link to="/servicii" className="inline-flex justify-center items-center px-12 py-6 text-lg font-black rounded-full border-2 border-slate-200 text-slate-900 hover:bg-slate-50 transition-all uppercase italic tracking-tighter">
+                Vezi Serviciile
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="bg-white py-20 border-y border-slate-100">
+      {/* Services Snapshot */}
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
-            {home.stats?.map((stat, i) => (
-              <div key={i} className="p-8 group hover:bg-slate-50 rounded-3xl transition-all">
-                <div className="text-6xl font-black text-accent mb-2 tracking-tighter italic">{stat.value}</div>
-                <div className="text-slate-500 font-bold uppercase tracking-widest text-xs">{stat.label}</div>
-              </div>
+          <div className="flex justify-between items-end mb-16">
+            <div>
+              <h2 className="text-4xl font-black uppercase italic tracking-tighter mb-4 text-slate-900">Servicii <span className="text-accent">Daser</span></h2>
+              <p className="text-slate-500 font-medium max-w-xl">De la mici personalizări la proiecte industriale de amploare.</p>
+            </div>
+            <Link to="/servicii" className="hidden md:block text-accent font-black uppercase text-sm border-b-2 border-accent pb-1 hover:text-slate-900 hover:border-slate-900 transition-all">Toate serviciile</Link>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+            {services.map((item, i) => (
+              <Link key={i} to={`/servicii/${item.slug}`} className="group relative bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm hover:shadow-2xl hover:shadow-accent/5 transition-all overflow-hidden text-left">
+                <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <span className="text-8xl font-black italic">0{i + 1}</span>
+                </div>
+                <h3 className="text-2xl font-black mb-4 uppercase italic tracking-tight group-hover:text-accent transition-colors">{item.title}</h3>
+                <p className="text-slate-500 mb-8 line-clamp-2">{item.description}</p>
+                <ul className="space-y-2">
+                  {item.benefits?.slice(0, 3).map((b, bi) => (
+                    <li key={bi} className="flex items-center gap-2 text-sm font-bold text-slate-700">
+                      <svg className="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" /></svg>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </Link>
             ))}
           </div>
         </div>
       </section>
+    </div>
+  );
+};
+
+const ServicesPage = ({ data }) => {
+  const services = data?.pages?.services?.items || [];
+  return (
+    <div className="pt-32 pb-20 animate-in fade-in slide-in-from-bottom-5 duration-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mb-16">
+          <h1 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-6">Expertiză în <span className="text-accent">Producție</span></h1>
+          <p className="text-xl text-slate-500 font-medium">Soluții complete de branding, de la design la montajul final.</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {services.map((item, i) => (
+            <div key={i} className="bg-white p-10 rounded-3xl border border-slate-100 flex flex-col justify-between">
+              <div>
+                <h3 className="text-xl font-black mb-4 uppercase italic tracking-tight">{item.title}</h3>
+                <p className="text-slate-500 text-sm mb-6 leading-relaxed">{item.description}</p>
+              </div>
+              <div className="space-y-4">
+                <ul className="space-y-2 mb-8">
+                  {item.benefits?.map((b, bi) => (
+                    <li key={bi} className="flex items-center gap-2 text-xs font-bold text-slate-600">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent"></div>
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/contact" className="block text-center py-3 bg-slate-50 hover:bg-accent hover:text-white rounded-xl text-xs font-black uppercase tracking-widest transition-all">Solicită Detalii</Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const AboutPage = ({ data }) => {
+  const about = data?.pages?.about;
+  const stats = data?.pages?.home?.stats || [];
+  return (
+    <div className="pt-32 pb-20 animate-in fade-in duration-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center mb-32">
+          <div>
+            <h1 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter mb-8 leading-none">{about?.hero?.title}</h1>
+            <p className="text-xl text-slate-900 font-bold mb-8 italic">{about?.hero?.subtitle}</p>
+            <div className="prose prose-slate prose-lg text-slate-500 font-medium">
+              <p>{about?.content}</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {stats.map((s, i) => (
+              <div key={i} className={`p-8 rounded-[2rem] ${i === 2 ? 'col-span-2' : ''} ${i % 2 === 0 ? 'bg-accent text-white' : 'bg-slate-900 text-white'}`}>
+                <div className="text-4xl font-black italic tracking-tighter mb-2">{s.value}</div>
+                <div className="text-[10px] font-black uppercase tracking-widest opacity-80">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="bg-slate-50 rounded-[3rem] p-12 md:p-20 text-center">
+          <h2 className="text-4xl font-black uppercase italic tracking-tighter mb-12">Procesul Nostru</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {[
+              { step: '01', title: 'Consultare', text: 'Analizăm nevoile și mediul de aplicare.' },
+              { step: '02', title: 'Design', text: 'Creăm machetele conform standardelor.' },
+              { step: '03', title: 'Producție', text: 'Folosim tehnologie de ultimă oră.' },
+              { step: '04', title: 'Montaj', text: 'Execuție impecabilă la locația clientului.' }
+            ].map((s, i) => (
+              <div key={i} className="space-y-4">
+                <div className="text-accent text-2xl font-black italic">/ {s.step}</div>
+                <h3 className="font-black uppercase italic tracking-tight text-lg">{s.title}</h3>
+                <p className="text-slate-500 text-sm font-medium">{s.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FAQPage = ({ data }) => {
+  const [open, setOpen] = useState(0);
+  const faqs = data?.pages?.faq?.items || [];
+  return (
+    <div className="pt-40 pb-20 animate-in slide-in-from-top-4 duration-700">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-5xl font-black uppercase italic tracking-tighter mb-16 text-center">Răspunsuri la <span className="text-accent">Întrebări</span></h1>
+        <div className="space-y-4">
+          {faqs.map((f, i) => (
+            <div key={i} className="border border-slate-100 rounded-2xl overflow-hidden shadow-sm">
+              <button onClick={() => setOpen(open === i ? -1 : i)} className="w-full flex justify-between items-center p-6 text-left hover:bg-slate-50 transition-colors">
+                <span className="font-black uppercase italic tracking-tight text-slate-900">{f.question}</span>
+                <span className={`transform transition-transform ${open === i ? 'rotate-45' : ''} text-accent text-2xl`}>+</span>
+              </button>
+              {open === i && <div className="p-6 pt-0 text-slate-500 font-medium leading-relaxed border-t border-slate-50">{f.answer}</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ContactPage = ({ data }) => {
+  const contact = data?.company?.contact;
+  return (
+    <div className="pt-40 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div>
+            <h1 className="text-6xl font-black uppercase italic tracking-tighter mb-8 leading-none">Hai să <span className="text-accent">Vorbim</span></h1>
+            <p className="text-xl text-slate-500 font-medium mb-12">Suntem pregătiți să transformăm viziunea ta într-un produs finit de excepție.</p>
+
+            <div className="space-y-8">
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Telefon</h4>
+                <a href={`tel:${contact?.phone}`} className="text-2xl font-black italic tracking-tight hover:text-accent transition-colors">{contact?.phone}</a>
+              </div>
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Email</h4>
+                <a href={`mailto:${contact?.email}`} className="text-2xl font-black italic tracking-tight hover:text-accent transition-colors">{contact?.email}</a>
+              </div>
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Program de Lucru</h4>
+                <span className="text-lg font-bold text-slate-700">{contact?.schedule}</span>
+              </div>
+              <div className="pt-8">
+                <a href={`https://wa.me/${contact?.whatsapp}`} target="_blank" className="inline-flex items-center gap-4 bg-[#25D366] text-white px-8 py-4 rounded-full font-black uppercase italic tracking-tight hover:scale-105 transition-transform shadow-xl shadow-green-500/20">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.417-.003 6.557-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.305 1.652zm6.599-3.835c1.53.909 3.039 1.389 4.603 1.391 5.483.003 9.948-4.463 9.95-9.947.001-2.657-1.032-5.155-2.908-7.032-1.875-1.875-4.375-2.907-7.031-2.908-5.483-.002-9.947 4.463-9.95 9.947-.001 2.069.541 4.056 1.57 5.79l-1.026 3.735 3.824-.997-1.032 6.088zm8.56-4.299c-.458-.229-2.708-1.336-3.129-1.489-.42-.153-.726-.23-.1.03.229.305.764 1.145.936 1.336.172.191.344.229.802.115 2.503-.961 4.299-2.13 5.385-4.002s1.411-4.025.764-5.245c-.21-.305-.726-.458-1.528-.841-.803-.382-3.793-1.834-4.364-2.102-.572-.267-1.144-.401-1.639-.305-.495.096-1.565.419-2.28 1.13-.715.711-2.327 2.216-2.327 5.405 0 3.189 2.327 6.273 2.632 6.7.305.42 4.542 6.946 10.983 9.695.534.228 1.066.457 1.603.626.541.17 1.034.146 1.424.088.435-.065 1.336-.546 1.527-1.074.191-.527.191-.979.134-1.074-.056-.096-.21-.153-.668-.382z" /></svg>
+                  Contact WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+          <div>
+            <form className="bg-slate-900 p-12 rounded-[3.5rem] shadow-2xl space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Nume</label>
+                  <input type="text" className="w-full bg-slate-800 border-none rounded-xl px-4 py-4 text-white focus:ring-2 focus:ring-accent transition-all" placeholder="Popescu Ion" />
+                </div>
+                <div>
+                  <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Telefon</label>
+                  <input type="text" className="w-full bg-slate-800 border-none rounded-xl px-4 py-4 text-white focus:ring-2 focus:ring-accent transition-all" placeholder="0740..." />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Serviciu Interesat</label>
+                <select className="w-full bg-slate-800 border-none rounded-xl px-4 py-4 text-white focus:ring-2 focus:ring-accent transition-all">
+                  <option>Colantări Auto</option>
+                  <option>Print Mare Format</option>
+                  <option>Textile Personalizate</option>
+                  <option>ALTCEVA</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2">Mesaj</label>
+                <textarea className="w-full bg-slate-800 border-none rounded-xl px-4 py-4 text-white focus:ring-2 focus:ring-accent transition-all" rows="4" placeholder="Detalii proiect..."></textarea>
+              </div>
+              <button className="w-full py-6 bg-accent text-white font-black uppercase italic tracking-tighter text-xl rounded-full hover:bg-white hover:text-slate-900 transition-all shadow-xl shadow-accent/20">Trimite Cererea</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -170,26 +361,30 @@ function App() {
   // SEO Manager Logic
   const SEOManager = () => {
     const location = useLocation();
-    const params = useParams();
 
     useEffect(() => {
       if (!data) return;
 
-      let pageKey = location.pathname === '/' ? 'home' : location.pathname.split('/')[1];
-      let seo = data.pages?.[pageKey]?.seo;
+      let path = location.pathname;
+      let pageKey = path === '/' ? 'home' : path.split('/')[1];
 
-      if (seo) {
-        document.title = seo.title;
-        // Update Meta
+      // Handle services slug if needed
+      if (pageKey === 'servicii' && path.split('/')[2]) {
+        // You could find the specific service for title
+      }
+
+      let seoArr = data.pages?.[pageKey]?.seo;
+
+      if (seoArr) {
+        document.title = seoArr.title;
         const updateMeta = (name, value, property = false) => {
           let el = property ? document.querySelector(`meta[property="${name}"]`) : document.querySelector(`meta[name="${name}"]`);
           if (el) el.setAttribute('content', value);
         };
-        updateMeta('description', seo.description);
-        updateMeta('og:title', seo.og_title, true);
-        updateMeta('og:description', seo.og_description, true);
+        updateMeta('description', seoArr.description);
+        updateMeta('og:title', seoArr.og_title, true);
+        updateMeta('og:description', seoArr.og_description, true);
 
-        // Inject JSON-LD
         const scriptId = 'json-ld-schema';
         let existingScript = document.getElementById(scriptId);
         if (existingScript) existingScript.remove();
@@ -197,7 +392,7 @@ function App() {
         const script = document.createElement('script');
         script.id = scriptId;
         script.type = 'application/ld+json';
-        script.text = JSON.stringify(seo.schema_jsonld);
+        script.text = JSON.stringify(seoArr.schema_jsonld);
         document.head.appendChild(script);
       }
     }, [location, data]);
@@ -205,25 +400,25 @@ function App() {
     return null;
   };
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center bg-slate-50 italic font-black text-accent animate-pulse uppercase tracking-[0.2em]">Daser Design Studio Loading...</div>;
+  if (loading) return <div className="min-h-screen flex items-center justify-center bg-white italic font-black text-accent animate-pulse uppercase tracking-[0.2em] text-4xl">Daser Design Studio</div>;
   if (error) return <div className="min-h-screen flex items-center justify-center bg-red-50 text-red-500 font-bold">Error: {error}</div>;
 
   return (
     <Router>
       <SEOManager />
-      <div className="flex flex-col min-h-screen font-sans">
+      <div className="flex flex-col min-h-screen font-sans selection:bg-accent selection:text-white">
         <Header />
 
-        <main className="flex-grow">
+        <main className="flex-grow overflow-x-hidden">
           <Routes>
             <Route path="/" element={<HomePage data={data} />} />
-            <Route path="/servicii" element={<div className="pt-32 p-10 text-center font-bold">Servicii - Work in Progress</div>} />
-            <Route path="/portofoliu" element={<div className="pt-32 p-10 text-center font-bold">Portofoliu - Work in Progress</div>} />
-            <Route path="/despre" element={<div className="pt-32 p-10 text-center font-bold">Despre - Work in Progress</div>} />
-            <Route path="/faq" element={<div className="pt-32 p-10 text-center font-bold">FAQ - Work in Progress</div>} />
-            <Route path="/contact" element={<div className="pt-32 p-10 text-center font-bold">Contact - Work in Progress</div>} />
-            <Route path="/termeni-si-conditii" element={<div className="pt-32 p-10 text-center font-bold">Terms - Work in Progress</div>} />
-            <Route path="/politica-de-confidentialitate" element={<div className="pt-32 p-10 text-center font-bold">Privacy - Work in Progress</div>} />
+            <Route path="/servicii" element={<ServicesPage data={data} />} />
+            <Route path="/portofoliu" element={<div className="pt-40 pb-20 text-center font-black uppercase text-4xl">Portofoliu - Curând</div>} />
+            <Route path="/despre" element={<AboutPage data={data} />} />
+            <Route path="/faq" element={<FAQPage data={data} />} />
+            <Route path="/contact" element={<ContactPage data={data} />} />
+            <Route path="/termeni-si-conditii" element={<div className="pt-40 pb-20 max-w-4xl mx-auto px-4"><h1 className="text-4xl font-black mb-8 uppercase italic">{data?.pages?.legal?.terms?.title}</h1><div className="prose">{data?.pages?.legal?.terms?.content}</div></div>} />
+            <Route path="/politica-de-confidentialitate" element={<div className="pt-40 pb-20 max-w-4xl mx-auto px-4"><h1 className="text-4xl font-black mb-8 uppercase italic">{data?.pages?.legal?.privacy?.title}</h1><div className="prose">{data?.pages?.legal?.privacy?.content}</div></div>} />
           </Routes>
         </main>
 
