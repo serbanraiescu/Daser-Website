@@ -209,10 +209,8 @@ const HomePage = ({ data }) => {
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
           <StripeReveal>
             <span className="text-accent font-black uppercase tracking-[0.4em] text-[10px] mb-8 block">Est. {data?.company?.established} • Premium Production</span>
-            <h1 className="text-7xl md:text-[9rem] font-black text-slate-900 leading-[0.9] tracking-tighter mb-16 uppercase italic">
-              {content?.hero?.title.split(' ').slice(0, 2).join(' ')}<br />
-              <span className="text-accent underline decoration-[10px] underline-offset-[15px]">{content?.hero?.title.split(' ').slice(2, 3)}</span><br />
-              {content?.hero?.title.split(' ').slice(3).join(' ')}
+            <h1 className="text-7xl md:text-[10rem] font-black text-slate-900 leading-[0.9] tracking-tighter mb-16 uppercase italic">
+              {content?.hero?.title}
             </h1>
           </StripeReveal>
 
