@@ -8,7 +8,7 @@ const MetaTags = ({ title, description }) => {
   useEffect(() => {
     document.title = title ? `${title} | Daser Design` : 'Daser Design Studio | Producție Publicitară Premium';
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.setAttribute('content', description || 'Atelier de producție publicitară în Bucovina. Colantări auto, print mare format, textile și branding.');
+    if (metaDesc) metaDesc.setAttribute('content', description || 'Atelier de producție publicitară premium. Colantări auto, print mare format, textile și branding.');
   }, [title, description]);
   return null;
 };

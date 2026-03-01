@@ -9,7 +9,7 @@
             "email": "office@daser.ro",
             "whatsapp": "0754 520 740",
             "schedule": "Luni - Vineri: 09:00 - 18:00",
-            "address": "Câmpulung Moldovenesc, Suceava, Bucovina",
+            "address": "Câmpulung Moldovenesc, Suceava",
             "cui": "ROXXXXXXXXX",
             "regCom": "J33/XXXX/2016"
         }
@@ -17,7 +17,7 @@
     "pages": {
         "home": {
             "hero": {
-                "title": "Producție Publicitară & Branding Profesional în Bucovina",
+                "title": "Producție Publicitară & Branding Profesional",
                 "subtitle": "Colantări auto, print mare format, textile personalizate și semnalistică realizate în atelier propriu, cu execuție rapidă și atenție la detalii.",
                 "bullets": [
                     "Atelier propriu",
@@ -169,7 +169,7 @@
         },
         "about": {
             "title": "Atelierul Noastru. Viziunea Ta.",
-            "content": "Daser Design Studio s-a născut în 2016 în inima Bucovinei, din dorința de a ridica standardele producției publicitare locale. Suntem o echipă tânără, dar cu o experiență vastă, dedicați fiecărui proiect ce ne trece pragul. Avem propriul atelier dotat cu tehnologie de ultimă oră, ceea ce ne permite să controlăm calitatea și să respectăm termenele de livrare fără compromisuri. Valorile noastre sunt simple: Seriozitate, Calitate, Inovație."
+            "content": "Daser Design Studio s-a născut în 2016, din dorința de a ridica standardele producției publicitare locale. Suntem o echipă tânără, dar cu o experiență vastă, dedicați fiecărui proiect ce ne trece pragul. Avem propriul atelier dotat cu tehnologie de ultimă oră, ceea ce ne permite să controlăm calitatea și să respectăm termenele de livrare fără compromisuri. Valorile noastre sunt simple: Seriozitate, Calitate, Inovație."
         },
         "process": {
             "steps": [
