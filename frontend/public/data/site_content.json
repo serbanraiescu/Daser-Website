@@ -1,0 +1,252 @@
+{
+    "company": {
+        "name": "Daser Design Studio",
+        "legalName": "Daser Enterprise SRL",
+        "established": "2016",
+        "location": "Câmpulung Moldovenesc, Suceava",
+        "contact": {
+            "phone": "0754 520 740",
+            "email": "office@daser.ro",
+            "whatsapp": "0754 520 740",
+            "schedule": "Luni - Vineri: 09:00 - 18:00",
+            "address": "Câmpulung Moldovenesc, Suceava, Bucovina",
+            "cui": "ROXXXXXXXXX",
+            "regCom": "J33/XXXX/2016"
+        }
+    },
+    "pages": {
+        "home": {
+            "hero": {
+                "title": "Producție Publicitară & Branding Profesional în Bucovina",
+                "subtitle": "Colantări auto, print mare format, textile personalizate și semnalistică realizate în atelier propriu, cu execuție rapidă și atenție la detalii.",
+                "bullets": [
+                    "Atelier propriu",
+                    "Control calitate",
+                    "Montaj profesionist",
+                    "Soluții personalizate"
+                ],
+                "ctas": {
+                    "primary": "Cere Ofertă Rapidă",
+                    "secondary": "Vezi Portofoliul"
+                }
+            },
+            "stats": [
+                {
+                    "label": "Proiecte Finalizate",
+                    "value": "1500+"
+                },
+                {
+                    "label": "Ani Experiență",
+                    "value": "8+"
+                },
+                {
+                    "label": "Clienți Fericiți",
+                    "value": "500+"
+                }
+            ]
+        },
+        "services": {
+            "intro": "Daser Design Studio oferă soluții complete de producție publicitară pentru afaceri dinamice. De la branding vizual la implementări de mari dimensiuni, ajutăm clienții noștri (Horeca, retail, auto, companii locale) să iasă în evidență prin calitate și profesionalism.",
+            "list": [
+                {
+                    "id": "colantari-auto",
+                    "title": "Colantări Auto",
+                    "shortDesc": "Transformă-ți mașina într-un magnet de clienți.",
+                    "benefit": "Marketing mobil 24/7 cu folii premium.",
+                    "fullDesc": "Oferim servicii complete de colantare: de la schimbarea culorii (color change) până la branding comercial complet sau parțial. Utilizăm folii auto de top (3M, Oracal, Avery) care protejează vopseaua și rezistă în timp.",
+                    "details": [
+                        "Full wrap (colantare integrală)",
+                        "Partial wrap (branding parțial)",
+                        "Inscripționări reflectorizante și grafică tăiată",
+                        "Protecție vopsea (PPF)"
+                    ],
+                    "durability": "Între 3 și 7 ani, în funcție de materialul ales.",
+                    "faq": [
+                        {
+                            "q": "Cât durează procesul?",
+                            "a": "O colantare integrală durează de obicei între 2 și 4 zile lucrătoare."
+                        },
+                        {
+                            "q": "Afectează vopseaua originală?",
+                            "a": "Nu, dimpotrivă, folia protejează vopseaua de razele UV și zgârieturi ușoare."
+                        },
+                        {
+                            "q": "Cum se întreține o mașină colantată?",
+                            "a": "Recomandăm spălarea manuală sau cu jet de apă, evitând periile abrazive."
+                        }
+                    ]
+                },
+                {
+                    "id": "print-mare-format",
+                    "title": "Print Mare Format",
+                    "shortDesc": "Vizibilitate maximă pentru afacerea ta.",
+                    "benefit": "Impresionează prin dimensiuni și culori vibrante.",
+                    "fullDesc": "Producem materiale publicitare de mari dimensiuni pe o varietate de suporturi: banner (prelată), mesh (perforat pentru vânt), autocolant sau backlit (pentru reclame luminoase).",
+                    "details": [
+                        "Bannere outdoor rezistente la intemperii",
+                        "Mesh-uri pentru fațade clădiri",
+                        "Autocolante vitrine și pardoseală",
+                        "Tablouri canvas și sisteme roll-up"
+                    ],
+                    "technical": "Rezoluție de până la 1440 DPI pentru detalii impecabile.",
+                    "faq": [
+                        {
+                            "q": "Ce fișiere sunt necesare?",
+                            "a": "Acceptăm PDF, TIFF sau CDR, la scară 1:1 sau 1:10, cu profil de culoare CMYK."
+                        },
+                        {
+                            "q": "Rezistă la soare și ploaie?",
+                            "a": "Da, folosim cerneluri ecosolvent cu rezistență ridicată la razele UV."
+                        }
+                    ]
+                },
+                {
+                    "id": "textile-personalizate",
+                    "title": "Textile Personalizate",
+                    "shortDesc": "Îmbracă-ți echipa în culorile succesului.",
+                    "benefit": "Unitate și profesionalism prin echipamente custom.",
+                    "fullDesc": "Personalizăm o gamă largă de textile: tricouri, hanorace, șpci sau echipamente de protecție. Folosim tehnologii moderne pentru durabilitate maximă la spălări repetate.",
+                    "details": [
+                        "DTF (Direct to Film) - culori nelimitate",
+                        "Transfer termic cu autocolant textil",
+                        "Echipamente de lucru durabile",
+                        "Personalizare cadouri textile"
+                    ],
+                    "faq": [
+                        {
+                            "q": "Care este cantitatea minimă?",
+                            "a": "Personalizăm chiar și o singură bucată, dar oferim discounturi semnificative pentru volume mari."
+                        },
+                        {
+                            "q": "La câte grade se spală?",
+                            "a": "Recomandăm spălarea la maxim 30-40 de grade, pe dos, pentru a proteja imprimeul."
+                        }
+                    ]
+                },
+                {
+                    "id": "semnalistica",
+                    "title": "Semnalistică & Reclame",
+                    "shortDesc": "Fă-te remarcat chiar și pe timp de noapte.",
+                    "benefit": "Prezență fizică de neignorat pentru sediul tău.",
+                    "fullDesc": "Livrăm soluții complete de semnalistică de la proiectare la montaj. Producem elemente luminoase sau simple care atrag privirile oricărui trecător.",
+                    "details": [
+                        "Litere volumetrice (cu sau fără iluminare)",
+                        "Casete luminoase LED",
+                        "Panouri publicitare metalice sau PVC",
+                        "Semnalistică de interior (wayfinding)"
+                    ],
+                    "faq": [
+                        {
+                            "q": "Oferiți și montaj?",
+                            "a": "Da, echipa noastră asigură montajul pe orice tip de suprafață sau structură."
+                        },
+                        {
+                            "q": "Ce garanție au literele volumetrice?",
+                            "a": "Oferim 24 de luni garanție pentru structură și instalația electrică LED."
+                        }
+                    ]
+                },
+                {
+                    "id": "design-branding",
+                    "title": "Design & Branding",
+                    "shortDesc": "Identitate vizuală care spune o poveste.",
+                    "benefit": "Fundația solidă a oricărei afaceri de succes.",
+                    "fullDesc": "Nu doar printăm, ci creăm concepte. De la logo-uri la manuale de brand, ne asigurăm că imaginea ta este coerentă pe toate suporturile.",
+                    "details": [
+                        "Creare Logo & Identitate vizuală",
+                        "Grafică publicitară pentru print",
+                        "Design cărți de vizită și flyere",
+                        "Consultanță în imagine de brand"
+                    ],
+                    "faq": [
+                        {
+                            "q": "Câte variante de logo primesc?",
+                            "a": "Pachetul standard include 3 concepte creative diferite."
+                        }
+                    ]
+                }
+            ]
+        },
+        "about": {
+            "title": "Atelierul Noastru. Viziunea Ta.",
+            "content": "Daser Design Studio s-a născut în 2016 în inima Bucovinei, din dorința de a ridica standardele producției publicitare locale. Suntem o echipă tânără, dar cu o experiență vastă, dedicați fiecărui proiect ce ne trece pragul. Avem propriul atelier dotat cu tehnologie de ultimă oră, ceea ce ne permite să controlăm calitatea și să respectăm termenele de livrare fără compromisuri. Valorile noastre sunt simple: Seriozitate, Calitate, Inovație."
+        },
+        "process": {
+            "steps": [
+                {
+                    "n": "01",
+                    "title": "Discuție & Brief",
+                    "desc": "Înțelegem nevoile tale, stabilim obiectivele și bugetul proiectului."
+                },
+                {
+                    "n": "02",
+                    "title": "Concept & Design",
+                    "desc": "Echipa de design creează simulări grafice pentru aprobarea ta finală."
+                },
+                {
+                    "n": "03",
+                    "title": "Producție",
+                    "desc": "Preluăm grafica și o transformăm în realitate în atelierul propriu."
+                },
+                {
+                    "n": "04",
+                    "title": "Montaj / Livrare",
+                    "desc": "Instalăm produsele la locația ta sau le expediem rapid prin curier."
+                },
+                {
+                    "n": "05",
+                    "title": "Suport",
+                    "desc": "Rămânem alături de tine pentru întreținere sau proiecte viitoare."
+                }
+            ]
+        },
+        "faq": {
+            "general": [
+                {
+                    "q": "Ce fișiere sunt necesare pentru print?",
+                    "a": "Fișierele preferate sunt PDF, TIFF sau CDR (CorelDraw), convertite la curbe, CMYK."
+                },
+                {
+                    "q": "Oferiți și servicii de design?",
+                    "a": "Da, avem departament de design propriu care te poate ajuta cu grafica de la zero."
+                },
+                {
+                    "q": "Cât durează o comandă obișnuită?",
+                    "a": "Majoritatea lucrărilor de print sunt gata în 24-48h. Proiectele complexe (litere luminoase) pot dura 7-10 zile."
+                },
+                {
+                    "q": "Se poate plăti prin bancă?",
+                    "a": "Da, acceptăm plată prin transfer bancar pe baza facturii fiscale emise."
+                },
+                {
+                    "q": "Sunt prețurile pe site/ofertă incluzând TVA?",
+                    "a": "Toate prețurile noastre sunt exprimate fără TVA (se adaugă cota legală de 19%)."
+                }
+            ]
+        }
+    },
+    "legal": {
+        "terms": {
+            "sections": [
+                {
+                    "t": "Servicii și Oferte",
+                    "c": "Toate ofertele emise de Daser Enterprise SRL sunt valabile 7 zile calendaristice. Acceptarea ofertei se face prin confirmare scrisă (email/WhatsApp)."
+                },
+                {
+                    "t": "Responsabilitatea Fișierelor",
+                    "c": "Clientul este direct responsabil pentru drepturile de autor asupra imaginilor/logo-urilor trimise și pentru greșelile de ortografie în fișierele 'Bun de Tipar'."
+                },
+                {
+                    "t": "Livrare și Garanții",
+                    "c": "Livrarea se face prin curier sau ridicare personală. Garanția acoperă defectele de fabricație, nu și uzura normală sau montajul necorespunzător realizat de terți."
+                }
+            ]
+        },
+        "privacy": {
+            "operator": "Daser Enterprise SRL",
+            "dataTypes": "Nume, Email, Telefon (colectate prin formularul de contact).",
+            "purpose": "Răspunsul la solicitările de ofertă și gestiunea relației comerciale.",
+            "rights": "Aveți dreptul de acces, rectificare și ștergere a datelor personale conform GDPR."
+        }
+    }
+}

@@ -4,7 +4,7 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 
 // --- SEO & META UTILITIES ---
 
-const MetaTags = ({ title, description, path }) => {
+const MetaTags = ({ title, description }) => {
   useEffect(() => {
     document.title = title ? `${title} | Daser Design` : 'Daser Design Studio | Producție Publicitară Premium';
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -96,7 +96,7 @@ const Header = () => {
   ];
 
   return (
-    <nav className="fixed w-full bg-white/90 backdrop-blur-xl z-50 border-b border-slate-100 h-20 flex items-center">
+    <nav className="fixed w-full bg-white/90 backdrop-blur-xl z-[60] border-b border-slate-100 h-20 flex items-center">
       <div className="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
         <Link to="/" className="flex items-center group">
           <img src="/assets/logo_dark.png" alt="Daser Design Studio" className="h-12 w-auto" />
@@ -117,7 +117,7 @@ const Header = () => {
           </MagneticButton>
         </div>
 
-        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-slate-900">
+        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="md:hidden p-2 text-slate-900 z-[70]">
           <Icon size={24}>
             <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 8h16M4 16h16"} /></svg>
           </Icon>
@@ -130,13 +130,20 @@ const Header = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 left-0 w-full bg-white border-b border-slate-100 p-8 flex flex-col gap-6 shadow-2xl z-[100]"
+            className="fixed top-0 left-0 w-full h-screen bg-white p-8 flex flex-col gap-6 shadow-2xl z-[65] pt-32"
           >
             {navLinks.map((link, i) => (
-              <Link key={i} to={link.path} onClick={() => setIsMenuOpen(false)} className="text-4xl font-black uppercase italic tracking-tighter text-slate-900 hover:text-accent">
+              <Link key={i} to={link.path} onClick={() => setIsMenuOpen(false)} className="text-5xl font-black uppercase italic tracking-tighter text-slate-900 hover:text-accent">
                 {link.name}
               </Link>
             ))}
+            <div className="mt-auto pb-10">
+              <p className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4 italic">Social</p>
+              <div className="flex gap-6 font-black uppercase italic text-xl tracking-tighter">
+                <a href="#" className="hover:text-accent">Instagram</a>
+                <a href="#" className="hover:text-accent">Facebook</a>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -174,8 +181,8 @@ const Footer = ({ data }) => (
           </ul>
         </div>
       </div>
-      <div className="pt-10 border-t border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 flex flex-col md:row justify-between gap-6">
-        <p>&copy; {new Date().getFullYear()} Daser Enterprise SRL. Toate drepturile rezervate.</p>
+      <div className="pt-10 border-t border-slate-100 text-[10px] font-black uppercase tracking-widest text-slate-400 flex flex-col md:flex-row justify-between gap-6">
+        <p>&copy; {new Date().getFullYear()} {data?.company?.legalName || 'Daser Enterprise SRL'}. Toate drepturile rezervate.</p>
         <div className="flex gap-10">
           <a href="https://anpc.ro" target="_blank" rel="noopener" className="hover:text-slate-900">ANPC</a>
           <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" className="hover:text-slate-900">SOL</a>
@@ -188,27 +195,24 @@ const Footer = ({ data }) => (
 // --- PAGES ---
 
 const HomePage = ({ data }) => {
-  const services = [
-    { title: 'Colantări Auto', slug: 'colantari-auto', desc: 'Marketing mobil premium cu folii dedicate.', icon: <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" /><path d="M13 16V6a1-1 0 00-1-1H4a1-1 0 00-1 1v10M17.803 16.203L19 16h1a1 1 0 001-1v-4a1 1 0 00-.293-.707l-2-2A1 1 0 0018 8h-2l-3 4s-3-1-3 4" /></svg> },
-    { title: 'Print Mare Format', slug: 'print-mare-format', desc: 'Bannere, mesh-uri și autocolante de impact.', icon: <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg> },
-    { title: 'Textile Custom', slug: 'textile-personalizate', desc: 'Personalizări durabile prin broderie sau DTF.', icon: <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5"><path d="M12 4v16m8-8H4" /></svg> }
-  ];
+  const content = data?.pages?.home;
+  const services = data?.pages?.services?.list?.slice(0, 3) || [];
 
   return (
     <div className="bg-white">
       <MetaTags
         title="Acasă"
-        description="Atelier de producție publicitară premium. Colantări auto, print mare format, textile și branding realizate cu tehnologie de ultimă oră."
+        description={content?.hero?.subtitle}
       />
       {/* HERO */}
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
           <StripeReveal>
-            <span className="text-accent font-black uppercase tracking-[0.4em] text-[10px] mb-8 block">Est. 2016 • Premium Production</span>
-            <h1 className="text-8xl md:text-[12rem] font-black text-slate-900 leading-[0.8] tracking-tighter mb-16 uppercase italic">
-              Daser<br />
-              <span className="text-accent underline decoration-[15px] underline-offset-[25px]">Design</span><br />
-              Studio
+            <span className="text-accent font-black uppercase tracking-[0.4em] text-[10px] mb-8 block">Est. {data?.company?.established} • Premium Production</span>
+            <h1 className="text-7xl md:text-[10rem] font-black text-slate-900 leading-[0.8] tracking-tighter mb-16 uppercase italic">
+              {content?.hero?.title.split(' ').slice(0, 2).join(' ')}<br />
+              <span className="text-accent underline decoration-[15px] underline-offset-[25px]">{content?.hero?.title.split(' ').slice(2, 3)}</span><br />
+              {content?.hero?.title.split(' ').slice(3).join(' ')}
             </h1>
           </StripeReveal>
 
@@ -219,15 +223,24 @@ const HomePage = ({ data }) => {
             transition={{ delay: 0.8 }}
             className="flex flex-col md:flex-row gap-20 items-end"
           >
-            <p className="text-2xl text-slate-500 font-bold max-w-xl leading-relaxed">
-              Transformăm viziunea ta în realitate prin producție publicitară de elită. Atelier propriu, tehnologie de ultimă oră și execuție impecabilă.
-            </p>
+            <div className="max-w-xl">
+              <p className="text-2xl text-slate-500 font-bold leading-relaxed mb-8">
+                {content?.hero?.subtitle}
+              </p>
+              <div className="flex flex-wrap gap-4 mb-10">
+                {content?.hero?.bullets?.map((b, i) => (
+                  <span key={i} className="text-xs font-black uppercase tracking-widest text-slate-400 flex items-center gap-2 italic">
+                    <span className="w-1.5 h-1.5 bg-accent rounded-full"></span> {b}
+                  </span>
+                ))}
+              </div>
+            </div>
             <div className="flex gap-4">
               <MagneticButton to="/contact" className="bg-slate-900 text-white px-12 py-6 rounded-full font-black uppercase italic tracking-tighter text-2xl shadow-2xl hover:bg-accent transition-all">
-                Cere Ofertă
+                {content?.hero?.ctas?.primary}
               </MagneticButton>
-              <MagneticButton to="/servicii" className="bg-white border-2 border-slate-900 text-slate-900 px-12 py-6 rounded-full font-black uppercase italic tracking-tighter text-2xl hover:bg-slate-50 transition-all">
-                Portofoliu
+              <MagneticButton to="/portofoliu" className="bg-white border-2 border-slate-900 text-slate-900 px-12 py-6 rounded-full font-black uppercase italic tracking-tighter text-2xl hover:bg-slate-50 transition-all">
+                {content?.hero?.ctas?.secondary}
               </MagneticButton>
             </div>
           </motion.div>
@@ -246,20 +259,34 @@ const HomePage = ({ data }) => {
         </div>
       </section>
 
-      {/* STRIPE */}
+      {/* INFINITE RUNNING STRIPE */}
       <div className="bg-accent py-6 overflow-hidden flex whitespace-nowrap">
         <motion.div
           animate={{ x: [0, -2000] }}
-          transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+          transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
           className="flex gap-20"
         >
           {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-            <span key={i} className="text-white font-black uppercase italic tracking-tighter text-5xl">PRODUCȚIE PUBLICITARĂ — PREMIUM QUALITY — MODERN TECH — ATELIER PROPRIU — COLANTĂRI AUTO — DESIGN & BRANDING</span>
+            <span key={i} className="text-white font-black uppercase italic tracking-tighter text-5xl">
+              PRODUCȚIE PUBLICITARĂ — {data?.company?.name.toUpperCase()} — {data?.company?.location.toUpperCase()} — PREMIUM QUALITY — MODERN TECH — ATELIER PROPRIU
+            </span>
           ))}
         </motion.div>
       </div>
 
-      {/* SERVICES */}
+      {/* STATS */}
+      <section className="py-20 bg-slate-50 border-y border-slate-100">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10">
+          {content?.stats?.map((s, i) => (
+            <div key={i} className="flex flex-col items-center text-center">
+              <span className="text-8xl font-black text-slate-200 mb-2 italic tracking-tighter">{s.value}</span>
+              <span className="text-xs font-black uppercase tracking-[0.4em] text-accent italic">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* SERVICES PREVIEW */}
       <section className="py-40">
         <div className="max-w-7xl mx-auto px-6">
           <StripeReveal>
@@ -276,63 +303,66 @@ const HomePage = ({ data }) => {
                 <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-[0.16, 1, 0.3, 1]"></div>
 
                 <div className="relative z-10">
-                  <div className="mb-10 text-accent group-hover:text-white transition-colors">
-                    <Icon size={64}>{s.icon}</Icon>
-                  </div>
                   <h3 className="text-5xl font-black uppercase italic tracking-tighter mb-6 group-hover:text-white transition-colors">{s.title}</h3>
-                  <p className="font-bold text-xl opacity-50 group-hover:text-white group-hover:opacity-80 transition-all">{s.desc}</p>
+                  <p className="font-bold text-xl opacity-50 group-hover:text-white group-hover:opacity-80 transition-all">{s.shortDesc}</p>
                 </div>
 
-                <Link to={`/servicii/${s.slug}`} className="relative z-10 font-black uppercase tracking-[0.3em] text-xs text-accent group-hover:text-white">
+                <Link to={`/servicii/${s.id}`} className="relative z-10 font-black uppercase tracking-[0.3em] text-xs text-accent group-hover:text-white">
                   Detalii +
                 </Link>
               </motion.div>
             ))}
           </div>
+          <div className="mt-20 text-center">
+            <MagneticButton to="/servicii" className="inline-block border-2 border-slate-900 text-slate-900 px-10 py-4 rounded-full font-black uppercase italic tracking-tighter text-xl">
+              Vezi toate serviciile
+            </MagneticButton>
+          </div>
         </div>
       </section>
 
-      {/* REASONS */}
+      {/* PROCESS PREVIEW */}
       <section className="py-40 bg-slate-900 text-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-40">
             <div>
               <StripeReveal>
-                <h2 className="text-9xl font-black uppercase italic tracking-tighter leading-none mb-20">De ce <br /> <span className="text-accent">Noi?</span></h2>
+                <h2 className="text-9xl font-black uppercase italic tracking-tighter leading-none mb-20">Proces <br /> <span className="text-accent">Simpu</span></h2>
               </StripeReveal>
-              <div className="space-y-20">
-                {[
-                  { t: 'Tehnologie TOP', d: 'Utilizăm cele mai noi echipamente de print și colantare pentru rezultate de neegalat.' },
-                  { t: 'Atelier Propriu', d: 'Controlăm 100% procesul de producție și calitatea fiecărui proiect livrat.' },
-                  { t: 'Execuție Rapidă', d: 'Timpul tău este prețios. Livrăm rapid fără a sacrifica niciun detaliu de calitate.' }
-                ].map((item, i) => (
+              <div className="space-y-16">
+                {data?.pages?.process?.steps?.slice(0, 3).map((step, i) => (
                   <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.2 }}
                     key={i}
-                    className="flex gap-10"
+                    className="flex gap-10 border-l-2 border-accent/20 pl-10"
                   >
-                    <span className="text-accent font-black text-5xl">0{i + 1}</span>
+                    <span className="text-accent font-black text-5xl italic">{step.n}</span>
                     <div>
-                      <h4 className="text-3xl font-black uppercase italic tracking-tighter mb-4">{item.t}</h4>
-                      <p className="text-slate-400 font-bold text-lg">{item.d}</p>
+                      <h4 className="text-3xl font-black uppercase italic tracking-tighter mb-4">{step.title}</h4>
+                      <p className="text-slate-400 font-bold text-lg">{step.desc}</p>
                     </div>
                   </motion.div>
                 ))}
               </div>
+              <Link to="/contact" className="inline-block mt-20 bg-accent text-white px-10 py-4 rounded-full font-black uppercase italic tracking-tighter text-xl shadow-xl shadow-accent/20 animate-pulse">
+                Începe un proiect
+              </Link>
             </div>
 
             <div className="relative hidden md:flex items-center justify-center">
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 40, ease: "linear" }}
-                className="w-full aspect-square border-[20px] border-accent/10 rounded-full flex items-center justify-center relative"
+                transition={{ repeat: Infinity, duration: 60, ease: "linear" }}
+                className="w-full aspect-square border-[10px] border-accent/10 border-dashed rounded-full flex items-center justify-center relative"
               >
-                <Icon size={200} className="text-accent/20">
-                  <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" /></svg>
-                </Icon>
+                <span className="absolute top-0 text-xs font-black uppercase italic text-accent/40 tracking-[1em]">Design</span>
+                <span className="absolute bottom-0 text-xs font-black uppercase italic text-accent/40 tracking-[1em]">Producție</span>
+                <div className="bg-slate-800 w-3/4 h-3/4 rounded-full flex items-center justify-center animate-pulse shadow-inner">
+                  <img src="/assets/logo_dark.png" alt="Daser" className="w-1/2 opacity-20 invert" />
+                </div>
               </motion.div>
             </div>
           </div>
@@ -342,73 +372,168 @@ const HomePage = ({ data }) => {
   );
 };
 
-const ServicesPage = () => (
-  <div className="py-40 px-6 max-w-7xl mx-auto min-h-screen">
-    <MetaTags title="Servicii" description="Descoperă gama completă de servicii Daser: colantări auto, print digital, personalizări textile și semnalistică publicitară." />
-    <StripeReveal>
-      <h1 className="text-8xl md:text-[10rem] font-black uppercase italic tracking-tighter mb-20">Servicii</h1>
-    </StripeReveal>
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
-      {[
-        { t: 'Colantări Auto', d: 'Aplicare folii premium (3M, Oracal, Avery) pentru schimbarea culorii sau branding comercial.' },
-        { t: 'Print Mare Format', d: 'Bannere, autocolante, mesh-uri și backlit pentru campanii publicitare de impact.' },
-        { t: 'Textile Personalizate', d: 'Tricouri, hanorace și echipamente de lucru personalizate prin broderie sau DTF.' },
-        { t: 'Semnalistică & Reclame', d: 'Litere volumetrice, panouri publicitare și casete luminoase de înaltă calitate.' }
-      ].map((s, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ delay: i * 0.1 }}
-          className="border-b-4 border-slate-100 pb-10"
-        >
-          <h3 className="text-4xl font-black uppercase italic mb-6">{s.t}</h3>
-          <p className="text-xl text-slate-500 font-bold leading-relaxed">{s.d}</p>
-          <Link to="/contact" className="inline-block mt-8 text-accent font-black uppercase tracking-widest text-xs border-b-2 border-accent">Solicită Detalii</Link>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-);
+const ServicesPage = ({ data }) => {
+  const content = data?.pages?.services;
 
-const AboutPage = () => (
-  <div className="py-40 px-6 max-w-7xl mx-auto flex flex-col items-center text-center gap-20">
-    <MetaTags title="Despre Noi" description="Suntem un atelier de producție publicitară înființat în 2016, dedicat calității și inovației în Bucovina." />
-    <StripeReveal>
-      <h1 className="text-8xl md:text-[10rem] font-black uppercase italic tracking-tighter">Atelierul Noastru</h1>
-    </StripeReveal>
-    <p className="text-3xl font-bold text-slate-500 max-w-4xl leading-relaxed">
-      Daser Studio s-a născut din pasiunea pentru detalii și dorința de a oferi partenerilor noștri soluții de branding care să iasă în evidență.
-      Echipat cu tehnologie de ultimă oră, atelierul nostru gestionează intern întregul flux de producție.
-    </p>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full">
-      <div className="bg-slate-50 p-10 rounded-3xl"><h4 className="text-4xl font-black mb-4">2016</h4><p className="font-bold opacity-50 uppercase tracking-widest text-xs">Anul Înființării</p></div>
-      <div className="bg-slate-50 p-10 rounded-3xl"><h4 className="text-4xl font-black mb-4">1500+</h4><p className="font-bold opacity-50 uppercase tracking-widest text-xs">Proiecte Livrate</p></div>
-      <div className="bg-slate-50 p-10 rounded-3xl"><h4 className="text-4xl font-black mb-4">100%</h4><p className="font-bold opacity-50 uppercase tracking-widest text-xs">Producție Proprie</p></div>
-    </div>
-  </div>
-);
-
-const ContactPage = () => (
-  <div className="py-40 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 min-h-screen">
-    <MetaTags title="Contact" description="Contactează echipa Daser Studio pentru oferte personalizate de producție publicitară." />
-    <div>
+  return (
+    <div className="py-40 px-6 max-w-7xl mx-auto min-h-screen">
+      <MetaTags title="Servicii" description={content?.intro} />
       <StripeReveal>
-        <h1 className="text-8xl md:text-[10rem] font-black uppercase italic tracking-tighter mb-10">Salut!</h1>
+        <h1 className="text-7xl md:text-[10rem] font-black uppercase italic tracking-tighter mb-20 leading-none">Servicii</h1>
       </StripeReveal>
-      <p className="text-2xl font-bold text-slate-500 mb-20 leading-relaxed italic">Ești gata să dai viață proiectului tău? <br /> Scrie-ne sau sună-ne direct.</p>
-      <div className="space-y-10">
-        <div><p className="text-xs font-black uppercase tracking-widest text-slate-300 mb-2 italic">Telefon</p><p className="text-3xl font-black italic">0754 520 740</p></div>
-        <div><p className="text-xs font-black uppercase tracking-widest text-slate-300 mb-2 italic">Email</p><p className="text-3xl font-black italic">office@daser.ro</p></div>
+      <p className="text-3xl font-bold text-slate-500 max-w-4xl leading-relaxed mb-32 italic">
+        {content?.intro}
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
+        {content?.list?.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="border-b-4 border-slate-100 pb-16 group"
+          >
+            <h3 className="text-4xl md:text-5xl font-black uppercase italic mb-8 group-hover:text-accent transition-colors tracking-tighter">{s.title}</h3>
+            <p className="text-xl text-slate-500 font-bold leading-relaxed mb-10">{s.fullDesc}</p>
+            <ul className="mb-12 space-y-4">
+              {s.details?.map((detail, idx) => (
+                <li key={idx} className="font-black uppercase italic text-xs tracking-widest text-slate-400 flex items-center gap-3">
+                  <span className="w-2 h-2 bg-accent"></span> {detail}
+                </li>
+              ))}
+            </ul>
+            <MagneticButton to="/contact" className="inline-block bg-slate-900 text-white px-8 py-4 rounded-full font-black uppercase italic tracking-tighter text-sm hover:bg-accent transition-all">
+              Programează o discuție
+            </MagneticButton>
+          </motion.div>
+        ))}
       </div>
     </div>
-    <div className="bg-slate-50 p-12 rounded-[4rem]">
-      <form className="space-y-8" onSubmit={e => e.preventDefault()}>
-        <div><input type="text" placeholder="NUME COMPLET" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase focus:border-accent outline-none transition-all" /></div>
-        <div><input type="email" placeholder="ADRESA EMAIL" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase focus:border-accent outline-none transition-all" /></div>
-        <div><textarea placeholder="DETALII PROIECT..." rows="4" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase focus:border-accent outline-none transition-all resize-none"></textarea></div>
-        <MagneticButton className="w-full bg-accent text-white py-8 rounded-3xl font-black uppercase italic text-2xl shadow-xl shadow-accent/20">Trimite Mesaj</MagneticButton>
+  );
+};
+
+const AboutPage = ({ data }) => {
+  const content = data?.pages?.about;
+
+  return (
+    <div className="py-40 px-6 max-w-7xl mx-auto flex flex-col items-center text-center gap-20">
+      <MetaTags title="Despre Noi" description={content?.content} />
+      <StripeReveal>
+        <h1 className="text-7xl md:text-[11vw] font-black uppercase italic tracking-tighter leading-none">Studio</h1>
+      </StripeReveal>
+      <p className="text-3xl md:text-4xl font-bold text-slate-500 max-w-5xl leading-tight italic">
+        {content?.content}
+      </p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 w-full mt-20">
+        <div className="bg-slate-50 p-16 rounded-[4rem] flex flex-col items-center">
+          <h4 className="text-8xl font-black mb-4 italic text-accent">{data?.company?.established}</h4>
+          <p className="font-black opacity-30 uppercase tracking-widest text-xs">Anul Înființării</p>
+        </div>
+        <div className="bg-slate-50 p-16 rounded-[4rem] flex flex-col items-center">
+          <h4 className="text-8xl font-black mb-4 italic text-accent">1500+</h4>
+          <p className="font-black opacity-30 uppercase tracking-widest text-xs">Proiecte Finalizate</p>
+        </div>
+        <div className="bg-slate-50 p-16 rounded-[4rem] flex flex-col items-center border-4 border-accent shadow-2xl shadow-accent/20">
+          <h4 className="text-8xl font-black mb-4 italic text-slate-900">100%</h4>
+          <p className="font-black opacity-30 uppercase tracking-widest text-xs">Atelier Propriu</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const FAQPage = ({ data }) => {
+  const [open, setOpen] = useState(null);
+  const faqs = data?.pages?.faq?.general || [];
+
+  return (
+    <div className="py-40 px-6 max-w-5xl mx-auto min-h-screen">
+      <MetaTags title="FAQ" description="Întrebări frecvente despre resurse, print și procese de producție." />
+      <StripeReveal>
+        <h1 className="text-7xl md:text-[10rem] font-black uppercase italic tracking-tighter mb-20 text-center">FAQ</h1>
+      </StripeReveal>
+      <div className="space-y-6">
+        {faqs.map((f, i) => (
+          <div key={i} className="bg-slate-50 rounded-3xl overflow-hidden">
+            <button
+              onClick={() => setOpen(open === i ? null : i)}
+              className="w-full p-8 text-left flex justify-between items-center group"
+            >
+              <span className="text-2xl font-black uppercase italic tracking-tighter group-hover:text-accent transition-colors">{f.q}</span>
+              <span className={`text-4xl font-black transition-transform ${open === i ? 'rotate-45 text-accent' : ''}`}>+</span>
+            </button>
+            <AnimatePresence>
+              {open === i && (
+                <motion.div
+                  initial={{ height: 0 }}
+                  animate={{ height: 'auto' }}
+                  exit={{ height: 0 }}
+                  className="overflow-hidden"
+                >
+                  <p className="p-8 pt-0 text-xl font-bold text-slate-500 italic max-w-3xl leading-relaxed">{f.a}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const ContactPage = ({ data }) => (
+  <div className="py-40 px-6 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-20 min-h-screen">
+    <MetaTags title="Contact" description="Contactează echipa Daser Studio pentru oferte personalizate de producție publicitară în Bucovina." />
+    <div>
+      <StripeReveal>
+        <h1 className="text-8xl md:text-[12rem] font-black uppercase italic tracking-tighter mb-10 leading-none">Salut!</h1>
+      </StripeReveal>
+      <p className="text-3xl font-bold text-slate-500 mb-20 leading-relaxed italic">Ești gata să dai viață proiectului tău? <br /> Scrie-ne sau sună-ne direct.</p>
+      <div className="space-y-12">
+        <div>
+          <p className="text-xs font-black uppercase tracking-widest text-slate-300 mb-2 italic">Telefon / WhatsApp</p>
+          <p className="text-4xl font-black italic hover:text-accent transition-colors">{data?.company?.contact?.phone}</p>
+        </div>
+        <div>
+          <p className="text-xs font-black uppercase tracking-widest text-slate-300 mb-2 italic">Email</p>
+          <p className="text-4xl font-black italic hover:text-accent transition-colors">{data?.company?.contact?.email}</p>
+        </div>
+        <div>
+          <p className="text-xs font-black uppercase tracking-widest text-slate-300 mb-2 italic">Locație</p>
+          <p className="text-xl font-black italic text-slate-400 capitalize">{data?.company?.contact?.address}</p>
+        </div>
+      </div>
+    </div>
+    <div className="bg-slate-50 p-12 md:p-20 rounded-[4rem] shadow-inner relative group">
+      <div className="absolute top-10 right-10 opacity-10 group-hover:opacity-100 transition-opacity">
+        <Icon size={120} className="text-accent animate-spin-slow">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z" /></svg>
+        </Icon>
+      </div>
+      <form className="space-y-8 relative z-10" onSubmit={e => e.preventDefault()}>
+        <div><input type="text" placeholder="NUME COMPLET" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase italic focus:border-accent outline-none transition-all text-xl" /></div>
+        <div><input type="email" placeholder="ADRESA EMAIL" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase italic focus:border-accent outline-none transition-all text-xl" /></div>
+        <div><textarea placeholder="DETALII PROIECT..." rows="4" className="w-full bg-transparent border-b-4 border-slate-200 py-4 font-black uppercase italic focus:border-accent outline-none transition-all resize-none text-xl"></textarea></div>
+        <MagneticButton className="w-full bg-accent text-white py-10 rounded-3xl font-black uppercase italic text-3xl shadow-2xl shadow-accent/40 hover:scale-[1.02] active:scale-95 transition-all">
+          Trimite Mesaj
+        </MagneticButton>
       </form>
+    </div>
+  </div>
+);
+
+const LegalPage = ({ title, sections }) => (
+  <div className="py-40 px-6 max-w-4xl mx-auto min-h-screen">
+    <StripeReveal>
+      <h1 className="text-6xl font-black uppercase italic tracking-tighter mb-20 leading-none">{title}</h1>
+    </StripeReveal>
+    <div className="space-y-16">
+      {sections?.map((s, i) => (
+        <div key={i}>
+          <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-4 text-accent">{s.t}</h3>
+          <p className="text-xl font-bold text-slate-500 leading-relaxed italic">{s.c}</p>
+        </div>
+      ))}
     </div>
   </div>
 );
@@ -434,19 +559,18 @@ function App() {
     <Router>
       <div className="flex flex-col min-h-screen font-sans selection:bg-accent selection:text-white transition-colors duration-500">
         <Header />
-        <main className="flex-grow pt-20">
+        <main className="flex-grow">
           <AnimatePresence mode="wait">
             <Routes>
               <Route path="/" element={<HomePage data={data} />} />
-              <Route path="/servicii" element={<ServicesPage />} />
-              <Route path="/despre" element={<AboutPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/portofoliu" element={<div className="py-60 italic font-black text-9xl text-center opacity-5">LUCRĂRI</div>} />
-              <Route path="/faq" element={<div className="py-60 italic font-black text-9xl text-center opacity-5">FAQ</div>} />
-              <Route path="/termeni-si-conditii" element={<div className="py-40 px-6 max-w-4xl mx-auto font-bold opacity-30">Legal Content...</div>} />
-              <Route path="/politica-de-confidentialitate" element={<div className="py-40 px-6 max-w-4xl mx-auto font-bold opacity-30">GDPR Content...</div>} />
-              <Route path="/politica-cookies" element={<div className="py-40 px-6 max-w-4xl mx-auto font-bold opacity-30">Cookie Policy Content...</div>} />
-              {/* Fallback for SPA routing handled by .htaccess on server */}
+              <Route path="/servicii" element={<ServicesPage data={data} />} />
+              <Route path="/despre" element={<AboutPage data={data} />} />
+              <Route path="/faq" element={<FAQPage data={data} />} />
+              <Route path="/contact" element={<ContactPage data={data} />} />
+              <Route path="/portofoliu" element={<div className="py-60 italic font-black text-9xl text-center opacity-5 select-none">PORTFOLIO</div>} />
+              <Route path="/termeni-si-conditii" element={<LegalPage title="Termeni și Condiții" sections={data?.legal?.terms?.sections} />} />
+              <Route path="/politica-de-confidentialitate" element={<div className="py-40 px-6 max-w-4xl mx-auto italic font-bold text-slate-400">GDPR Content coming from CRM...</div>} />
+              <Route path="/politica-cookies" element={<div className="py-40 px-6 max-w-4xl mx-auto italic font-bold text-slate-400">Cookie Policy coming from CRM...</div>} />
             </Routes>
           </AnimatePresence>
         </main>
