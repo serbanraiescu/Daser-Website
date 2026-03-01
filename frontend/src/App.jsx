@@ -251,10 +251,29 @@ const HomePage = ({ data }) => {
               initial={{ scaleY: 0 }}
               animate={{ scaleY: 1 }}
               transition={{ duration: 1.5, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-1 bg-slate-50 border-l border-white origin-top"
-            />
+              className="flex-1 bg-slate-50 border-l border-white origin-top relative"
+            >
+              {i === 2 && (
+                <motion.div
+                  initial={{ scaleY: 0 }}
+                  animate={{ scaleY: 1 }}
+                  transition={{ duration: 2, delay: 1, ease: "easeInOut" }}
+                  className="absolute left-0 top-0 w-[2px] h-full bg-accent/20 origin-top"
+                />
+              )}
+            </motion.div>
           ))}
         </div>
+
+        {/* DECORATIVE LINES */}
+        <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/10 to-transparent -z-10"></div>
+        <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/5 to-transparent -z-10"></div>
+        <motion.div
+          initial={{ width: 0 }}
+          animate={{ width: '100px' }}
+          transition={{ duration: 1, delay: 0.5 }}
+          className="absolute top-1/2 left-10 h-1 bg-accent -z-10 rounded-full"
+        />
       </section>
 
       {/* INFINITE RUNNING STRIPE */}
