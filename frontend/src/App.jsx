@@ -244,6 +244,35 @@ const HomePage = ({ data }) => {
           </motion.div>
         </div>
 
+        <div className="absolute inset-0 -z-20 overflow-hidden pointer-events-none opacity-20">
+          {/* GRID */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#f1f5f9_1px,transparent_1px),linear-gradient(to_bottom,#f1f5f9_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+
+          {/* ANIMATED TECH LINES */}
+          <svg className="absolute inset-0 w-full h-full">
+            <motion.path
+              d="M0 200 L200 200 L300 300 L600 300"
+              stroke="#A7127B"
+              strokeWidth="1"
+              fill="none"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.5 }}
+              transition={{ duration: 3, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            />
+            <motion.path
+              d="M100% 100 L80% 100 L70% 200 L40% 200"
+              stroke="#A7127B"
+              strokeWidth="1"
+              fill="none"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.3 }}
+              transition={{ duration: 4, delay: 1, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            />
+            <circle cx="200" cy="200" r="3" fill="#A7127B" className="animate-pulse" />
+            <circle cx="600" cy="300" r="3" fill="#A7127B" className="animate-pulse" />
+          </svg>
+        </div>
+
         <div className="absolute top-0 right-0 w-1/2 h-full -z-10 flex">
           {[1, 2, 3].map(i => (
             <motion.div
