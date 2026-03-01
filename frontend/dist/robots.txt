@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /wp-admin/
+Disallow: /wp-content/
+Disallow: /wp-includes/
+Disallow: /shop/
+Disallow: /checkout/
+Disallow: /my-account/
+
+Sitemap: https://daser.ro/sitemap.xml

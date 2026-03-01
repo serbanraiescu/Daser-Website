@@ -1,0 +1,20 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 1) WP CLEANUP - 301 REDIRECTS FOR OLD URLS
+  # Redirect any WordPress-style patterns to appropriate modern pages
+  RewriteRule ^hello-world/?$ / [R=301,L]
+  RewriteRule ^shop/?$ /servicii [R=301,L]
+  RewriteRule ^checkout/?$ /contact [R=301,L]
+  RewriteRule ^my-account/?$ /contact [R=301,L]
+  RewriteRule ^wp-content/.*$ / [R=301,L]
+  RewriteRule ^wp-admin/.*$ / [R=301,L]
+  RewriteRule ^[0-9]{4}/[0-9]{2}/[0-9]{2}/.*$ / [R=301,L]
+
+  # 2) SPA ROUTING - FALLBACK TO INDEX.HTML
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
