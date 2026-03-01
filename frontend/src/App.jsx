@@ -144,7 +144,7 @@ const Footer = ({ data }) => (
             <span className="font-black text-lg tracking-tighter uppercase italic">Daser Studio</span>
           </div>
           <h2 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-10 leading-[0.85] uppercase italic">
-            Partenerul tău <br /> <span className="text-accent underline decoration-[8px] underline-offset-[12px]">Premium</span> în Bucovina.
+            Partenerul tău <br /> <span className="text-accent underline decoration-[8px] underline-offset-[12px]">Premium</span> pentru Branding.
           </h2>
         </div>
         <div className="md:col-span-3">
@@ -185,7 +185,7 @@ const HomePage = ({ data }) => {
       <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
           <StripeReveal>
-            <span className="text-accent font-black uppercase tracking-[0.4em] text-[10px] mb-8 block">Est. 2012 • Premium Production</span>
+            <span className="text-accent font-black uppercase tracking-[0.4em] text-[10px] mb-8 block">Est. 2016 • Premium Production</span>
             <h1 className="text-8xl md:text-[12rem] font-black text-slate-900 leading-[0.8] tracking-tighter mb-16 uppercase italic">
               Daser<br />
               <span className="text-accent underline decoration-[15px] underline-offset-[25px]">Design</span><br />
