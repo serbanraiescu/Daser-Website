@@ -77,16 +77,8 @@ const Header = () => {
   return (
     <nav className="fixed w-full bg-white/90 backdrop-blur-xl z-50 border-b border-slate-100 h-20 flex items-center">
       <div className="max-w-7xl mx-auto px-6 w-full flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 group">
-          <motion.div
-            whileHover={{ rotate: 90 }}
-            className="w-9 h-9 bg-accent rounded-xl flex items-center justify-center text-white font-black text-xl shadow-lg shadow-accent/20"
-          >
-            D
-          </motion.div>
-          <span className="font-black text-xl tracking-tighter text-slate-900 uppercase italic">
-            Daser<span className="text-accent underline decoration-4 underline-offset-4">Studio</span>
-          </span>
+        <Link to="/" className="flex items-center group">
+          <img src="/assets/logo_dark.png" alt="Daser Design Studio" className="h-12 w-auto" />
         </Link>
 
         <div className="hidden md:flex items-center gap-10">
@@ -139,9 +131,8 @@ const Footer = ({ data }) => (
     <div className="max-w-7xl mx-auto px-6">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-20 mb-32">
         <div className="md:col-span-6">
-          <div className="flex items-center gap-2 mb-10">
-            <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center text-white font-black text-sm">D</div>
-            <span className="font-black text-lg tracking-tighter uppercase italic">Daser Studio</span>
+          <div className="mb-10">
+            <img src="/assets/logo_dark.png" alt="Daser Design Studio" className="h-10 w-auto" />
           </div>
           <h2 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-10 leading-[0.85] uppercase italic">
             Partenerul tău <br /> <span className="text-accent underline decoration-[8px] underline-offset-[12px]">Premium</span> pentru Branding.
